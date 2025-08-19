@@ -92,16 +92,12 @@ function initializeExtension() {
 
   // Set up declarativeNetRequest debug listener (only available in debug mode)
   try {
-    if (chrome.declarativeNetRequest && chrome.declarativeNetRequest.onRuleMatchedDebug) {
-      chrome.declarativeNetRequest.onRuleMatchedDebug.addListener(
-        function(info) {
-          console.log('Rule matched for URL:', info.request.url);
-          if (info.request.url.includes('onepasswdfill')) {
-            handleOnePasswordFill(info);
-          }
-        }
-      );
-    }
+    chrome.declarativeNetRequest?.onRuleMatchedDebug?.addListener((info) => {
+      console.log('Rule matched for URL:', info.request.url);
+      if (info.request.url.includes('onepasswdfill')) {
+        handleOnePasswordFill(info);
+      }
+    });
   } catch (error) {
     console.log('DeclarativeNetRequest debug API not available:', error);
   }
